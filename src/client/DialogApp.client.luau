@@ -19,7 +19,7 @@ local ClickToDisappear = hookComponent(function(props, hooks)
 			Size = UDim2.new(0, 200, 0, 50),
 			Position = UDim2.new(0.5, -100, 0.5, -25),
 			AnchorPoint = Vector2.new(0.5, 0.5),
-			Text = "클릭하면 사라짐 맨",
+			Text = "클릭하면 사라짐........",
 			TextScaled = true,
 			BackgroundColor3 = Color3.fromRGB(255, 150, 150),
 
