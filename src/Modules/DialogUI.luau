@@ -12,7 +12,7 @@ local ClickToDisappear = hookComponent(function(props, hooks)
     return Roact.createElement("TextButton", {
         Size = UDim2.new(0, 200, 0, 50),
         Position = UDim2.new(0.5, -100, 0.5, -25),
-        Text = "클릭하면 사라져요!",
+        Text = "클릭하면 사라져요! 맨~",
         BackgroundColor3 = Color3.fromRGB(100, 149, 237),
 
         [Roact.Event.Activated] = function()
