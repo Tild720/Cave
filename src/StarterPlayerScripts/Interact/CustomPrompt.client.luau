@@ -410,8 +410,7 @@ local function createPrompt(prompt, inputType, gui)
 		objectText.AutoLocalize = prompt.AutoLocalize
 		objectText.RootLocalizationTable = prompt.RootLocalizationTable
 
-		promptUI.Size = UDim2.fromOffset(promptWidth, promptHeight)
-		promptUI.SizeOffset = Vector2.new(prompt.UIOffset.X / promptUI.Size.Width.Offset, prompt.UIOffset.Y / promptUI.Size.Height.Offset)
+		
 	end
 
 	local changedConnection = prompt.Changed:Connect(updateUIFromPrompt)
