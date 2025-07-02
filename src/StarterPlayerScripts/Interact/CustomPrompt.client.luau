@@ -3,7 +3,7 @@ local ProximityPromptService = game:GetService("ProximityPromptService")
 local TweenService = game:GetService("TweenService")
 local TextService = game:GetService("TextService")
 local Players = game:GetService("Players")
-
+local Text = require(game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("TextModule"):WaitForChild("Text"))
 local LocalPlayer = Players.LocalPlayer
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
@@ -95,14 +95,14 @@ local function createPrompt(prompt, inputType, gui)
 	local promptUI = nil
 	local promptTheme = prompt:GetAttribute("Theme")
 	if promptTheme then
-		local themedPromptUI = script:FindFirstChild(promptTheme)
+		local themedPromptUI = script.Parent:FindFirstChild(promptTheme)
 		if themedPromptUI then
 			promptUI = themedPromptUI:Clone()
 		end
 	end
 
 	if promptUI == nil then
-		promptUI = script.Default:Clone()
+		promptUI = script.Parent.Default:Clone()
 	end
 
 	promptUI.Enabled = true
@@ -279,7 +279,7 @@ local function createPrompt(prompt, inputType, gui)
 		setupButtonImageTweens()
 		buttonImage.Size = UDim2.fromOffset(28, 30)
 
-		-- Show ButtonImage
+	
 		buttonImage.Visible = true
 
 		local buttonTextString = UserInputService:GetStringForKeyCode(prompt.KeyboardKeyCode)
@@ -301,7 +301,7 @@ local function createPrompt(prompt, inputType, gui)
 			icon.Size = UDim2.fromOffset(36, 36)
 			icon.Image = buttonTextImage
 
-			--  Hide ButtonText, show ButtonTextImage
+		
 			buttonText.Visible = false
 			icon.Visible = true
 		elseif buttonTextString ~= nil and buttonTextString ~= '' then
@@ -311,7 +311,7 @@ local function createPrompt(prompt, inputType, gui)
 			setupButtonTextTweens()
 			buttonText.Text = buttonTextString
 
-			-- Hide ButtonTextImage, show ButtonText
+		
 			icon.Visible = false
 			buttonText.Visible = true
 		else
@@ -381,37 +381,49 @@ local function createPrompt(prompt, inputType, gui)
 		end
 	end)
 
+	
+	
+
+	
 	local function updateUIFromPrompt()
-		-- todo: Use AutomaticSize instead of GetTextSize when that feature becomes available
-		local actionTextSize = TextService:GetTextSize(prompt.ActionText, actionText.TextSize, actionText.Font, Vector2.new(1000, 1000))
-		local objectTextSize = TextService:GetTextSize(prompt.ObjectText, objectText.TextSize, objectText.Font, Vector2.new(1000, 1000))
-		local maxTextWidth = math.max(actionTextSize.X, objectTextSize.X)
-		local promptHeight = 72
-		local promptWidth = 72
-		local textPaddingLeft = 72
 
-		if (prompt.ActionText ~= nil and prompt.ActionText ~= '') or
-			(prompt.ObjectText ~= nil and prompt.ObjectText ~= '') then
-			promptWidth = maxTextWidth + textPaddingLeft + 25
-		end
-
-		local actionTextYOffset = 0
-		if prompt.ObjectText ~= nil and prompt.ObjectText ~= '' then
-			actionTextYOffset = 9
-		end
-		actionText.Position = UDim2.new(0.75, -55,0, 8)
-		objectText.Position = UDim2.new(0.75, -55,0, -8)
-
-		actionText.Text = prompt.ActionText
-		objectText.Text = prompt.ObjectText
-		actionText.AutoLocalize = prompt.AutoLocalize
-		actionText.RootLocalizationTable = prompt.RootLocalizationTable
-
-		objectText.AutoLocalize = prompt.AutoLocalize
-		objectText.RootLocalizationTable = prompt.RootLocalizationTable
+		actionText.Visible = false
+		objectText.Visible = false
 
 		
+		if frame:FindFirstChild("CustomActionText") then
+			frame.CustomActionText:Destroy()
+		end
+		if frame:FindFirstChild("CustomObjectText") then
+			frame.CustomObjectText:Destroy()
+		end
+
+	
+		local resolution = Text.GetVirtualResolution()
+		local centerX = resolution.X / 2
+		local centerY = resolution.Y / 2
+
+		
+		local customActionText = Text.new("November", true)
+		customActionText.Name = "CustomActionText"
+		customActionText.Text = prompt.ActionText
+		customActionText.TextSize = 7
+		
+		customActionText.Position = Vector2.new(centerX + 0, centerY + 100) 
+
+		local customObjectText = Text.new("November", true)
+		customObjectText.Name = "CustomObjectText"
+		customObjectText.Text = prompt.ObjectText
+		customObjectText.TextSize = 4
+		
+		customObjectText.Position = Vector2.new(centerX + 0, centerY - 100) 
+
+	
+		customActionText.Parent = frame
+		customObjectText.Parent = frame
 	end
+
+
 
 	local changedConnection = prompt.Changed:Connect(updateUIFromPrompt)
 	updateUIFromPrompt()

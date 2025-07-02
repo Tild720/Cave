@@ -1,35 +1,47 @@
-  {
-    "name": "Wave-Town",
-    "tree": {
-      "$className": "DataModel",
+{
+  "name": "Wave-Town",
+  "tree": {
+    "$className": "DataModel",
 
-      "ReplicatedStorage": {
-        "Modules": {
-          "$path": "src/Modules"
-        },
-        "Packages":{
-          "$path": "Packages"
+    "Modules": {
+  "$path": "src/Modules",
+  "Font": {
+    "$className": "Folder",
+    "November": {
+      "$className": "Folder",
+      "ImageID": {
+        "$className": "StringValue",
+        "$properties": {
+          "Value": "http://www.roblox.com/asset/?id=15849151180"
+        }
+      }
+    }
+  }
+},
+
+    "ServerScriptService": {
+      "Server": {
+        "$path": "src/server"
+      }
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/StarterPlayerScripts",
+        "InteractFolder": {
+          "$path": "src/StarterPlayerScripts/Interact",
+          "CustomPrompt": {
+            "$path": "src/StarterPlayerScripts/InteractFolder/CustomPrompt.client.luau"
+          },
+          "Default": {
+            "$path": "src/StarterPlayerScripts/InteractFolder/Default.rbxmx"
+          }
         }
       },
-
-      "ServerScriptService": {
-        "Server": {
-          "$path": "src/server"
-        }
-      },
-
-      "StarterPlayer": {
-        "StarterPlayerScripts": {
-         
-            "$path": "src/StarterPlayerScripts"
-          
-        },
-        "StarterCharacterScripts": {
-         
-            "$path": "src/StarterCharacterScripts"
-          
-        }
-      },
+      "StarterCharacterScripts": {
+        "$path": "src/StarterCharacterScripts"
+      }
+    },
 
     "Workspace": {
       "$properties": {
@@ -39,38 +51,24 @@
         "$className": "Part",
         "$properties": {
           "Anchored": true,
-          "Color": [
-            0.38823,
-            0.37254,
-            0.38823
-          ],
+          "Color": [0.38823, 0.37254, 0.38823],
           "Locked": true,
-          "Position": [
-            0,
-            -10,
-            0
-          ],
-          "Size": [
-            512,
-            20,
-            512
-          ]
+          "Position": [0, -10, 0],
+          "Size": [512, 20, 512]
         }
       }
     },
+
     "Lighting": {
       "$properties": {
-        "Ambient": [
-          0,
-          0,
-          0
-        ],
+        "Ambient": [0, 0, 0],
         "Brightness": 2,
         "GlobalShadows": true,
         "Outlines": false,
         "Technology": "Voxel"
       }
     },
+
     "SoundService": {
       "$properties": {
         "RespectFilteringEnabled": true
