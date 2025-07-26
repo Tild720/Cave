@@ -8,8 +8,8 @@ local userInputService = game:GetService('UserInputService')
 local collectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local TICK_SOUND = ReplicatedStorage.Sounds.tick
-local END_TICK_SOUND = ReplicatedStorage.Sounds.tick2
+local TICK_SOUND = ReplicatedStorage.Objects.Sounds.tick
+local END_TICK_SOUND = ReplicatedStorage.Objects.Sounds.tick2
 local DIALOG_RESPONSES_UI = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("dialog"):WaitForChild("dialogResponses")
 
 -- Constructor

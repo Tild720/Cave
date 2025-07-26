@@ -10,31 +10,49 @@
       }
     },
 
-
-
-    
-     "ReplicatedStorage": {
+    "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "$path": "src/ReplicatedStorage"
+      "Modules": {
+        "$className": "Folder",
+        "$path": "src/ReplicatedStorage/Modules"
+      }
+    },
+
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+       "Server": {
+        "$className": "Folder",
+        "$path": "src/ServerScriptService"
+      }
+    },
+
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "Modules": {
+        "$className": "Folder",
+        "$path": "src/ServerStorage/Modules"
+      }
+     
     },
 
     "StarterPlayer": {
       "$className": "StarterPlayer",
-
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
         "$path": "src/StarterPlayerScripts"
+      },
+
+       "StarterCharacterScripts": {
+        "$className": "StarterCharacterScripts",
+        "$path": "src/StarterCharacterScripts"
       }
     },
-        
 
     "Workspace": {
       "$className": "Workspace",
       "$properties": {
         "Gravity": 150
       }
-
-     
     }
   }
 }
