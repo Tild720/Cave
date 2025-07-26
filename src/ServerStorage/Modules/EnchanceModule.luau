@@ -107,7 +107,7 @@ function module.enhance(player : Player, befWeapon : Model, anvilPos : Vector3) 
 
 		local backpack = player:FindFirstChild("Backpack")
 		if not backpack then
-			warn("Backpack 없음")
+			warn("Backpack 없음") -- wha
 			return
 		end
 
