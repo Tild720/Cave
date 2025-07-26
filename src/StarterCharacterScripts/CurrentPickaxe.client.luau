@@ -11,7 +11,7 @@ local getWeaponAttributeRemote = game.ReplicatedStorage.Events.Function:WaitForC
 local befWeapon = ""
 local passiveDictionary = {   
     
-      ["Rusty Pickaxe"] = "기본 곡괭이, 생각보다 단단하다",
+    ["Rusty Pickaxe"] = "기본 곡괭이, 생각보다 단단하다",
     ["Stone Pickaxe"] = "가장 기본적인 재료로 만들어졌다",
     ["Iron Pickaxe"] = "튼튼하고 믿을 수 있는 금속 곡괭이",
     ["Gold Pickaxe"] = "반짝이지만 내구도는 낮다",
@@ -68,7 +68,11 @@ local function billboardUIFunc(canEnhance, weapon, aftweapon, price, prob, ingre
 		costLabel.Visible = true
 		probLabel.Visible = true
 
-		weaponLabel.Text = string.format("곡괭이 : %s ▶ %s", weapon, aftweapon)
+		local weaponClean = weapon:gsub("Pickaxe", "")
+        local aftweaponClean = aftweapon:gsub("Pickaxe", "")
+
+
+        weaponLabel.Text = string.format("%s ▶ %s", weaponClean, aftweaponClean)
 		costLabel.Text = string.format("비용 : %s", comma(price))
 		probLabel.Text = string.format("성공 확률 : %d%%", prob)
 		
@@ -112,7 +116,30 @@ local stroke = [[<stroke color = "#000000" joins = "Round" thickness = "%d" tran
 
 local function mainFunc(child)
 	task.wait(0.1)
-	local firstChild = character:FindFirstChildOfClass("Tool")
+	local firstChild = nil
+
+    
+    for _, tool in ipairs(character:GetChildren()) do
+        if tool:IsA("Tool") and string.find(tool.Name, "Pickaxe") then
+            firstChild = tool
+            break
+        end
+    end
+
+ 
+    if not firstChild then
+        local backpack = player:FindFirstChild("Backpack")
+        if backpack then
+            for _, tool in ipairs(backpack:GetChildren()) do
+                if tool:IsA("Tool") and string.find(tool.Name, "Pickaxe") then
+                    firstChild = tool
+                    break
+                end
+            end
+        end
+    end
+
+
 	if firstChild then
 		if firstChild.Name == befWeapon then return end
 		befWeapon = firstChild.Name

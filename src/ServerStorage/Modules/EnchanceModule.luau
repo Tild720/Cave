@@ -165,7 +165,7 @@ function module.enhance(player : Player, befWeapon : Model, anvilPos : Vector3) 
 			else
 				effectShowRemote:FireClient(player, "Success", anvilPos + Vector3.new(0, 8, 0))
 			end
-
+			
 			befWeapon:Destroy()
 			
 			local newWeapon = weaponFolder:FindFirstChild(attribute.aft):Clone()
@@ -174,15 +174,15 @@ function module.enhance(player : Player, befWeapon : Model, anvilPos : Vector3) 
 			humanoid:EquipTool(newWeapon)
 		else
 			pcall(function()
-				CurrentWeapon.Value = "돌 검"
+				CurrentWeapon.Value = "Rusty Pickaxe"
 			end)
 			print(player, "강화 실패")
 			effectShowRemote:FireClient(player, "Fail", anvilPos + Vector3.new(0, 8, 0))
-			uiShowRemote:FireClient(player, "EnhanceResult", false, befWeapon.Name, "돌 검")
+			uiShowRemote:FireClient(player, "EnhanceResult", false, befWeapon.Name, "Rusty Pickaxe")
 			soundFire(player, failSounds[math.random(1, 3)])
 			befWeapon:Destroy()
 			
-			local newWoodenSword = weaponFolder:FindFirstChild("돌 검")
+			local newWoodenSword = weaponFolder:FindFirstChild("Rusty Pickaxe")
 			if not newWoodenSword then return end
 			newWoodenSword = newWoodenSword:Clone()
 			newWoodenSword.Parent = humanoid

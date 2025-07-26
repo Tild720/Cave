@@ -2,7 +2,7 @@
 local runService = game:GetService("RunService")
 local httpService = game:GetService("HttpService")
 local dataStoreService = game:GetService("DataStoreService")
-local dataStore = dataStoreService:GetDataStore("CaveAlpha")
+local dataStore = dataStoreService:GetDataStore("CaveAlpha?")
 local datas = {}
 local emergencyData = {}
 local characterAddedFuncs = {}
@@ -11,7 +11,7 @@ local characterAddedFuncs = {}
 local defaultCEM = 300
 local defaultData = {
 	["Money"] =	10000,
-	["Weapon"] = "Stone Pickaxe",
+	["Weapon"] = "Rusty Pickaxe",
 }
 
 local function giveWeapon(character)
