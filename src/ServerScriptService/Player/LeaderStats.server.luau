@@ -23,7 +23,7 @@ local function giveWeapon(character)
 	
 	repeat
 		local weapon = game.ServerStorage.Weapons:FindFirstChild(datas[player.UserId].Weapon)
-		-- print(weapon)
+		print(weapon)
 		if weapon then
 			local humanoid = character:FindFirstChild("Humanoid")
 			if humanoid then
