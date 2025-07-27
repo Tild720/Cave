@@ -28,6 +28,7 @@ setmetatable(attributeDictionary, {
 
 local weaponFolder = game.ServerStorage.Weapons
 local uiShowRemote = game.ReplicatedStorage.Events.UIShow
+local playerRemote = game.ReplicatedStorage.Events.PlayerEvent
 local effectShowRemote = game.ReplicatedStorage.Events.EffectShow
 local playSoundRemote = game.ReplicatedStorage.Events.PlaySound
 local anvilSound = game.ReplicatedStorage.Objects.Sounds.AnvilSound
@@ -99,7 +100,7 @@ function module.enhance(player : Player, befWeapon : Model, anvilPos : Vector3) 
 	if not typeof(attribute.aft) or attribute.aft == "none" then print("더 이상 강화할 수 없습니다.", player) return end	
 	
 	if not weaponFolder:FindFirstChild(attribute.aft) then warn(weaponFolder, "폴더에 무기가 존재하지 않습니다.", attribute.aft, player) return end
-	if leaderstats.Money.Value < attribute.price then print("돈이 부족합니다.", player) return end
+	if leaderstats.Money.Value < attribute.price then playerRemote:FireClient(player,"Alert","Need more money.") return end
 	local has = true
 	if attribute.ingredient then
 		local has = true
@@ -122,7 +123,7 @@ function module.enhance(player : Player, befWeapon : Model, anvilPos : Vector3) 
 		-- 재료 충족 여부 확인
 		for itemname, amount in pairs(attribute.ingredient) do
 			if (toolsCount[itemname] or 0) < amount then
-				print("재료 부족")
+				playerRemote:FireClient(player,"Alert","Need more ingredients.")
 				return
 			end
 		end
@@ -143,7 +144,7 @@ function module.enhance(player : Player, befWeapon : Model, anvilPos : Vector3) 
 	end
 
 	
-	--print("강화 중...")
+	playerRemote:FireClient(player,"Alert","Starting upgrade...")
 	soundFire(player, anvilSound)
 	leaderstats.Money.Value -= attribute.price
 
