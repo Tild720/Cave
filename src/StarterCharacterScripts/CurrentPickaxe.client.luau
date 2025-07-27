@@ -56,7 +56,7 @@ local function billboardUIFunc(canEnhance, weapon, aftweapon, price, prob, ingre
 	local costLabel = statFrame.CostLabel
 	local errorLabel = statFrame.ErrorLabel
 	local probLabel = statFrame.ProbabilityLabel
-	local warnLabel = statFrame.WarnLabel
+
 	local weaponLabel = statFrame.WeaponLabel
 	local ingredientLabel = statFrame.IngredientLabel
 
@@ -64,7 +64,7 @@ local function billboardUIFunc(canEnhance, weapon, aftweapon, price, prob, ingre
 		errorLabel.Visible = false
 
 		weaponLabel.Visible = true
-		warnLabel.Visible = true
+	
 		costLabel.Visible = true
 		probLabel.Visible = true
 
@@ -94,7 +94,7 @@ local function billboardUIFunc(canEnhance, weapon, aftweapon, price, prob, ingre
 		errorLabel.Visible = true
 
 		weaponLabel.Visible = false
-		warnLabel.Visible = false
+
 		costLabel.Visible = false
 		probLabel.Visible = false
 
@@ -106,7 +106,7 @@ local function billboardUIFunc(canEnhance, weapon, aftweapon, price, prob, ingre
 		if not attachment then continue end
 		local findBillboard = attachment:FindFirstChildOfClass("BillboardGui")
 		if findBillboard then findBillboard:Destroy() end
-		
+		 
 		local cloneGui = mainBillboardGui:Clone()
 		cloneGui.Parent = attachment
 	end

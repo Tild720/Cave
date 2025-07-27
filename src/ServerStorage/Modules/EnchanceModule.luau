@@ -182,7 +182,7 @@ function module.enhance(player : Player, befWeapon : Model, anvilPos : Vector3) 
 			uiShowRemote:FireClient(player, "EnhanceResult", false, befWeapon.Name, "Rusty Pickaxe")
 			soundFire(player, failSounds[math.random(1, 3)])
 			befWeapon:Destroy()
-			
+				
 			local newWoodenSword = weaponFolder:FindFirstChild("Rusty Pickaxe")
 			if not newWoodenSword then return end
 			newWoodenSword = newWoodenSword:Clone()
