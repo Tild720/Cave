@@ -9,6 +9,7 @@ local enhanceResultFrame = player.PlayerGui:WaitForChild("MainUI"):WaitForChild(
 enhanceResultFrame.Visible = false
 local mainLabel = enhanceResultFrame:WaitForChild("MainLabel")
 local subLabel = enhanceResultFrame:WaitForChild("SubLabel")
+local TextButton = player.PlayerGui:WaitForChild("MainUI"):WaitForChild("TextButton")
 local enhanceAnnounceLabel = player.PlayerGui.MainUI:WaitForChild("EnhanceAnnounce")
 local currentWeaponLabel = player.PlayerGui.MainUI:WaitForChild("CurrentWeapon")
 local currentPassiveLael = player.PlayerGui.MainUI:WaitForChild("CurrentPassive")
@@ -17,34 +18,35 @@ local currentWeaponBox = player.PlayerGui.MainUI:WaitForChild("CurrentWeaponBox"
 local dtt = 0.3 -- default tween time
 
 uiShowRemote.OnClientEvent:Connect(function(showType, val1, val2, val3, val4)
+	print("UIShowRemote: ", showType, val1, val2, val3, val4)
 	if showType == "EnhanceResult" then
 		if val1 == nil or val2 == nil or val3 == nil then return end
 		local isSuccess = val1 -- boolean
-		if isSuccess then isSuccess = [[<font color="#00ff00">성공</font>]] else isSuccess = [[<font color="#ff0000">실패</font>]] end
+		if isSuccess then isSuccess = [[<font color="#00ff00">Successful</font>]] else isSuccess = [[<font color="#ff0000">Failed</font>]] end
 
 		local befWeapon = val2 -- string
 		local aftWeapon = val3 -- string
 
-		local stroke = [[<stroke color = "#000000" joins = "Round" thickness = "%d" transparency = "0">%s</stroke>]] --%d과 %s에 들어가야 함
-		local mainText = "<i>강화에 %s하셨습니다.</i>"
-		local subText = string.format("%s ▶ %s", befWeapon, aftWeapon)
+		local stroke = [[<stroke color = "#000000" joins = "Round" thickness = "%d" transparency = "0.87">%s</stroke>]] --%d과 %s에 들어가야 함
+		local mainText = "<i>Upgrade  %s</i>"
+		local subText = string.format("%s > %s", befWeapon, aftWeapon)
 		mainText = string.format(stroke, 2.7, mainText)
 		mainText = string.format(mainText, isSuccess)
 		
 		local newFrame = enhanceResultFrame:Clone()
 		local fbY = enhanceResultFrame.Position.Y.Scale
-		
-		newFrame.Parent = script.Parent
+		print(newFrame.MainLabel, newFrame.SubLabel, mainText, subText)
+		newFrame.Parent = player.PlayerGui.MainUI
 		newFrame.MainLabel.Text = mainText
 		newFrame.MainLabel.RichText = true
 		newFrame.SubLabel.Text = subText
 		
-		newFrame.Position = UDim2.fromScale(0.5, fbY + 1)
+		newFrame.Position = UDim2.fromScale(0.5,-0.1)
 		newFrame.Visible = true
-		tweenService:Create(newFrame, TweenInfo.new(dtt), {Position = UDim2.fromScale(0.5, fbY)}):Play()
+		tweenService:Create(newFrame, TweenInfo.new(dtt, Enum.EasingStyle.Quart), {Position = UDim2.fromScale(0.5,0.1)}):Play()
 		task.wait(2)
 		debris:AddItem(newFrame, dtt)
-		tweenService:Create(newFrame, TweenInfo.new(dtt), {Position = UDim2.fromScale(0.5, fbY + 1)}):Play()
+		tweenService:Create(newFrame, TweenInfo.new(dtt,Enum.EasingStyle.Quart), {Position = UDim2.fromScale(0.5,-0.1)}):Play()
 		--tweenService:Create(newFrame.MainLabel, TweenInfo.new(dtt), {TextTransparency = 1}):Play()
 	elseif showType == "EnhanceAnnounce" then
 		if val1 == nil then return end
@@ -71,7 +73,7 @@ local enter = false
 currentWeaponBox.MouseEnter:Connect(function()
 	enter = true
 	tweenService:Create(currentWeaponLabel, TweenInfo.new(playTime), {Position = UDim2.fromScale(0.009, 0.877)}):Play()
-	tweenService:Create(script.Parent.TextButton, TweenInfo.new(playTime), {Position = UDim2.fromScale(0.009,0.843)}):Play()
+	tweenService:Create(TextButton, TweenInfo.new(playTime), {Position = UDim2.fromScale(0.009,0.843)}):Play()
 	task.wait(playTime)
 	if enter then currentPassiveLael.Visible = true end
 end)
@@ -79,6 +81,6 @@ end)
 currentWeaponBox.MouseLeave:Connect(function()
 	enter = false
 	tweenService:Create(currentWeaponLabel, TweenInfo.new(playTime), {Position = UDim2.fromScale(0.009, 0.904)}):Play()
-	tweenService:Create(script.Parent.TextButton, TweenInfo.new(playTime), {Position = UDim2.fromScale(0.009,0.875)}):Play()
+	tweenService:Create(TextButton, TweenInfo.new(playTime), {Position = UDim2.fromScale(0.009,0.875)}):Play()
 	currentPassiveLael.Visible = false
 end)
