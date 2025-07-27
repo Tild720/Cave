@@ -2,22 +2,22 @@ local module = {}
 local attributeDictionary = { -- [<string>] = {prob = n′(%), price = n″(원), aft = <string′>} # 속성표는 이전무기를 기준으로 기재함(aft = "none"은 더 이상 강화 불가능)
 	
 	-- ingredient: {key[재료이름] = 필요개수} 식으로 작성
-	["Rusty Pickaxe"] = {prob = 90, price = 100, aft = "Stone Pickaxe", value = 100},  --100
-	["Stone Pickaxe"] = {prob = 80, price = 500, aft = "Iron Pickaxe", value = 150, }, --500
-	["Iron Pickaxe"] = {prob = 75, price = 1500, aft = "Gold Pickaxe", value = 900},--1500
-	["Gold Pickaxe"] = {prob = 70, price = 3000, aft = "Diamond Pickaxe", value = 2700,ingredient = {["숲의 돌"] = 1,}}, -- 3900
-	["Diamond Pickaxe"] = {prob = 60, price = 5000, aft = "Ruby Pickaxe", value =  6000,ingredient = {["힘의 돌"] = 3,}}, -- 9500 
-	["Ruby Pickaxe"] = {prob = 50, price = 6000, aft = "Emerald Pickaxe", value = 25000,ingredient = {["독 가시"] = 5,["독의 돌"] = 1}}, --16500
-	["Emerald Pickaxe"] = {prob = 40, price =8000, aft = "Fire Pickaxe", value = 35000,ingredient = {["얼음의 돌"] = 3}}, -- 17000
-	["Fire Pickaxe"] = {prob = 30, price = 12000, aft = "Ice Pickaxe", value = 70000,ingredient = {["과냉각된 얼음의 돌"] = 3,["얼음의 돌"] = 5}}, 
-	["Ice Pickaxe"] = {prob = 25, price = 33333, aft = "Void Pickaxe", value = 150000,ingredient = {["고대의 화염 구슬"] = 3,["지옥의 돌"] = 1}},
-	["Void Pickaxe"] = {prob = 20, price = 50000, aft = "지옥의 분노 검", value = 666666,ingredient = {["분노의 구슬"] = 3,["지옥의 돌"] = 3}}, 
+	["Rusty Pickaxe"] = {prob = 90, price = 100, aft = "Stone Pickaxe", value = 100, ingredient = {["Stone Ore"] = 3,}},  --100
+	["Stone Pickaxe"] = {prob = 80, price = 500, aft = "Iron Pickaxe", value = 150, ingredient = {["Iron Ore"] = 6, ["Stone Ore"] = 3,}}, --500
+	["Iron Pickaxe"] = {prob = 70, price = 1500, aft = "Gold Pickaxe", value = 900,ingredient = {["Gold Ore"] = 5,["Iron Ore"] = 10,}},--1500
+	["Gold Pickaxe"] = {prob = 60, price = 3000, aft = "Diamond Pickaxe", value = 2700,ingredient = {["Diamond Ore"] = 10,}}, -- 3900
+	["Diamond Pickaxe"] = {prob = 50, price = 5000, aft = "Ruby Pickaxe", value =  6000,ingredient = {["Carved Ruby"] = 5,}}, -- 9500 
+	["Ruby Pickaxe"] = {prob = 40, price = 6000, aft = "Emerald Pickaxe", value = 25000,ingredient = {["Carved Emerald"] = 5,["Ruby Ore"] = 10}}, --16500
+	["Emerald Pickaxe"] = {prob = 30, price =8000, aft = "Fire Pickaxe", value = 35000,ingredient = {["Fire Stone"] = 3},["Fire Orb"] = 5}, -- 17000
+	["Fire Pickaxe"] = {prob = 25, price = 12000, aft = "Ice Pickaxe", value = 70000,ingredient = {["Ice Stone"] = 3,["SuperCooling Emerald"] = 10}}, 
+	["Ice Pickaxe"] = {prob = 20, price = 33333, aft = "Void Pickaxe", value = 150000,ingredient = {["Void Orb"] = 3,["Blackening Ice Stone"] = 5}},
+	["Void Pickaxe"] = {prob = 15, price = 50000, aft = "Rage Pickaxe", value = 666666,ingredient = {["분노의 구슬"] = 3,["지옥의 돌"] = 3}}, 
 
   
 
 }
 local enhancingPlayers = {}
-local announceProb = 30 -- % 이하 강화에 성공할 경우 서버 내에 공지됨
+local announceProb = 90 -- % 이하 강화에 성공할 경우 서버 내에 공지됨
 
 setmetatable(attributeDictionary, {
 	__index = function(_, key)
