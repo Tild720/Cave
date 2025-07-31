@@ -4,8 +4,8 @@ module.OBJECTS.Inventory = {}
 
 -- SETTINGS
 local SETTINGS = module.SETTINGS
-SETTINGS.DEFAULT_COLOR = Color3.fromRGB(0, 0, 0) -- ToolFrame background color when unequipped
-SETTINGS.EQUIPPED_COLOR = Color3.fromRGB(128, 128, 128) -- ToolFrame background color when equipped
+SETTINGS.DEFAULT_COLOR = Color3.fromRGB(21, 23, 49) --me background color when unequipped
+SETTINGS.EQUIPPED_COLOR = Color3.fromRGB(35, 38, 78) -- ToolFrame background color when equipped
 SETTINGS.DISABLED_COLOR = Color3.fromRGB(128, 64, 65) -- ToolFrame background color when the tool is disabled
 SETTINGS.DEFAULT_IMAGEID = ""
 SETTINGS.EQUIPPED_IMAGEID = ""
@@ -110,7 +110,7 @@ function toolObjectMetatable:DisconnectAll() -- Makes a cleanup of connections a
 			toolAmount.Text = ""
 			toolIcon.Image = ""
 		end
-		self.Frame.BackgroundColor3 = SETTINGS.DEFAULT_COLOR
+	
 		self.Frame.Image = SETTINGS.DEFAULT_IMAGEID
 	else
 		self.Frame:Destroy()
@@ -346,27 +346,27 @@ function module:addTool(tool: Tool, parent: string, position: number)
 		if tool.Enabled then
 			frame.Image = SETTINGS.DEFAULT_IMAGEID
 			frame.BackgroundColor3 = SETTINGS.DEFAULT_COLOR
-			frame.ImageTransparency = 0
+			frame.ImageTransparency = 0.4
 			frame.toolIcon.ImageTransparency = 0
 			frame.toolName.TextTransparency = 0
 			frame.toolNumber.TextTransparency = 0
 			frame.toolAmount.TextTransparency = 0
 
-			frame.toolAmount.UIStroke.Transparency = 0
+			
 			--frame.toolNumber.Transparency = 0
-			frame.toolName.UIStroke.Transparency = 0
+			
 		else
 			frame.Image = SETTINGS.DISABLED_IMAGEID
 			frame.BackgroundColor3 = SETTINGS.DISABLED_COLOR
-			frame.ImageTransparency = 0.35
+			frame.ImageTransparency = 0.4
 			frame.toolIcon.ImageTransparency = 0.5
 			frame.toolName.TextTransparency = 0.6
 			frame.toolNumber.TextTransparency = 0.6
 			frame.toolAmount.TextTransparency = 0.6
 
-			frame.toolAmount.UIStroke.Transparency = 0.6
+			
 			--frame.toolNumber.Transparency = 0.6
-			frame.toolName.UIStroke.Transparency = 0.6
+			
 		end
 	end
 	updateEnabled()

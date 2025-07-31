@@ -54,13 +54,13 @@ local function manageInventory (_, inputState)
 		if currentState then
 			showSlots()
 			CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.5)
-			CustomInventoryGUI.openButton.info.Text = "(') close inventory"
+		
 		else
 			if not inventoryHandler.SETTINGS.SHOW_EMPTY_TOOL_FRAMES_IN_HOTBAR then
 				removeEmptySlots()
 			end
 			CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.909)
-			CustomInventoryGUI.openButton.info.Text = "(') open inventory"
+			
 		end
 	elseif not inputState then
 		for index = inventoryHandler.slotAmount + 1, inventoryHandler.slotAmount do
@@ -125,13 +125,13 @@ if inventoryHandler.SETTINGS.OPEN_BUTTON then
 		if currentState then
 			showSlots()
 			CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.5)
-			CustomInventoryGUI.openButton.info.Text = "(') close inventory"
+		
 		else
 			if not inventoryHandler.SETTINGS.SHOW_EMPTY_TOOL_FRAMES_IN_HOTBAR then
 				removeEmptySlots()
 			end
 			CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.909)
-			CustomInventoryGUI.openButton.info.Text = "(') open inventory"
+		
 		end
 	end)
 else
