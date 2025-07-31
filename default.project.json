@@ -15,7 +15,12 @@
       "Modules": {
         "$className": "Folder",
         "$path": "src/ReplicatedStorage/Modules"
+      },
+        "Settings": {
+        "$className": "Folder",
+        "$path": "src/ReplicatedStorage/Settings"
       }
+      
     },
 
     "ServerScriptService": {
