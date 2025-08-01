@@ -55,7 +55,6 @@ local function spawnOres(regionName, regionData, regionParts)
 
 		if not selectedOre then continue end
 
-		-- max 초과 시 스킵
 		oreCounts[selectedOre] = (oreCounts[selectedOre] or 0) + 1
 		if oreCounts[selectedOre] > regionData.Ores[selectedOre].max then
 			oreCounts[selectedOre] -= 1

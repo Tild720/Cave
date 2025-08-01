@@ -31,7 +31,7 @@ local function giveWeapon(character)
 				newWeapon.Parent = player.Backpack
 				task.wait(0.3)
 				if newWeapon.Parent == player.Backpack then
-					humanoid:EquipTool(newWeapon)
+
 					success = true
 				end
 			end
