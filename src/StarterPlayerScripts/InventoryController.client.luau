@@ -53,14 +53,13 @@ local function manageInventory (_, inputState)
 		inventoryHandler:removeCurrentDescription()
 		if currentState then
 			showSlots()
-			CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.5)
+				CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.52)
 		
 		else
 			if not inventoryHandler.SETTINGS.SHOW_EMPTY_TOOL_FRAMES_IN_HOTBAR then
 				removeEmptySlots()
 			end
-			CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.909)
-			
+			CustomInventoryGUI.openButton.Position = UDim2.fromScale(0.5,0.824)
 		end
 	elseif not inputState then
 		for index = inventoryHandler.slotAmount + 1, inventoryHandler.slotAmount do

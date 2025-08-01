@@ -4,8 +4,8 @@ module.OBJECTS.Inventory = {}
 
 -- SETTINGS
 local SETTINGS = module.SETTINGS
-SETTINGS.DEFAULT_COLOR = Color3.fromRGB(38, 51, 68) --me background color when unequipped
-SETTINGS.EQUIPPED_COLOR = Color3.fromRGB(44, 47, 88) -- ToolFrame background color when equipped
+SETTINGS.DEFAULT_COLOR = Color3.fromRGB(21, 21, 21) --me background color when unequipped
+SETTINGS.EQUIPPED_COLOR = Color3.fromRGB(34, 34, 34) -- ToolFrame background color when equipped
 SETTINGS.DISABLED_COLOR = Color3.fromRGB(128, 64, 65) -- ToolFrame background color when the tool is disabled
 SETTINGS.DEFAULT_IMAGEID = ""
 SETTINGS.EQUIPPED_IMAGEID = ""
