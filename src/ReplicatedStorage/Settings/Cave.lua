@@ -2,14 +2,14 @@ local Cave = {
     DepthRegions = {
         Mouth = {
 
-            SpawnCount = 70,
+            SpawnCount = 500,
             Ores = {
-                Stone = { chance = 0.5, max = 70 },
-                Coal = { chance = 0.4, max = 30 },
-                Copper = { chance = 0.1, max = 10 },
-                Iron = { chance = 0.05, max = 5},
-                Diamond = { chance = 0.04, max = 10},
-                Emerald = { chance = 0.01, max = 1},
+                Stone = { chance = 0.5, max = 100 },
+                Coal = { chance = 0.4, max = 100 },
+                Copper = { chance = 0.1, max = 100 },
+                Iron = { chance = 0.05, max = 100},
+                Diamond = { chance = 0.1, max = 100},
+                Emerald = { chance = 0.01, max = 100},
             }
         },
         Hollow = { -- 다이아몬드 곡괭이부터

@@ -162,7 +162,7 @@ game:BindToClose(function() -- 서버가 셧다운 될 때
 	print("서버가 셧다운 되는 중입니다.")
 	for _, player in ipairs(game.Players:GetPlayers()) do
 		task.spawn(function()
-			saveData(player)
+		--	saveData(player)
 		end)
 	end
 end)
