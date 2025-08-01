@@ -10,7 +10,7 @@ SETTINGS.DISABLED_COLOR = Color3.fromRGB(128, 64, 65) -- ToolFrame background co
 SETTINGS.DEFAULT_IMAGEID = ""
 SETTINGS.EQUIPPED_IMAGEID = ""
 SETTINGS.DISABLED_IMAGEID = ""
-SETTINGS.INVENTORY_KEYBIND = Enum.KeyCode.Backquote -- KeyCode to open the Inventory itself (set to nil to disable the Inventory or Backpack)
+SETTINGS.INVENTORY_KEYBIND = Enum.KeyCode.Backquote or Enum.KeyCode.Q -- KeyCode to open the Inventory itself (set to nil to disable the Inventory or Backpack)
 SETTINGS.DRAG_OUTSIDE_TO_DROP = false -- If set to true any tool you drag outside of the Inventory or HotBar will be dropped to the floor
 SETTINGS.SHOW_EMPTY_TOOL_FRAMES_IN_HOTBAR = false -- If set to true it will display all the tool frames in the HotBar even if they are empty and the Inventory closed
 SETTINGS.SCROLL_HOTBAR_WITH_WHEEL = false -- If set to true it will enable you to scroll the HotBar with the mouse wheel
@@ -356,6 +356,9 @@ function module:addTool(tool: Tool, parent: string, position: number)
 			--frame.toolNumber.Transparency = 0
 			
 		else
+			if (not tool.Parent)  then
+				print("having")
+			end
 			frame.Image = SETTINGS.DISABLED_IMAGEID
 			frame.BackgroundColor3 = SETTINGS.DISABLED_COLOR
 			frame.ImageTransparency = 0.4
