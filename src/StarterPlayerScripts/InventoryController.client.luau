@@ -113,6 +113,7 @@ reloadInventory(player.Character or player.CharacterAdded:Wait())
 camera:GetPropertyChangedSignal("ViewportSize"):Connect(updateHudPosition)
 player.CharacterAdded:Connect(reloadInventory)
 Inventory.SearchBox:GetPropertyChangedSignal("Text"):Connect(searchTool)
+local InventoryTweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 if inventoryHandler.SETTINGS.SHOW_EMPTY_TOOL_FRAMES_IN_HOTBAR then showSlots() end
 if inventoryHandler.SETTINGS.INVENTORY_KEYBIND then ContextActionService:BindAction("manageInventory", manageInventory, false, inventoryHandler.SETTINGS.INVENTORY_KEYBIND) end
 if inventoryHandler.SETTINGS.OPEN_BUTTON then
