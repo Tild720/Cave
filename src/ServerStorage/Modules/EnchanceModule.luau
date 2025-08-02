@@ -61,8 +61,8 @@ local function announceServer(player : Player, befWeapon : string, aftWeapon : s
 		table.insert(waitingList, {player, befWeapon, aftWeapon, prob})
 		return
 	end
-	announcing = true
-	uiShowRemote:FireAllClients("EnhanceAnnounce", true, string.format("%s(@%s)님이 %d%%의 확률을 뚫고 %s 강화에 성공해 %s를 획득하셨습니다", player.DisplayName, player.Name, prob, befWeapon, aftWeapon), announceTime)
+	announcing = true	
+	uiShowRemote:FireAllClients("EnhanceAnnounce", true, string.format("%s (@%s) has successfully upgraded %s with a %d%% chance and obtained %s!", player.DisplayName, player.Name, prob, befWeapon, aftWeapon), announceTime)
 	task.wait(announceTime)
 	
 	announcing = false
@@ -74,7 +74,7 @@ local function announceServer(player : Player, befWeapon : string, aftWeapon : s
 	else
 		uiShowRemote:FireAllClients("EnhanceAnnounce", false)
 	end
-end
+end	
 
 function module.stats(weaponName : string)
 	local canEnhance = true

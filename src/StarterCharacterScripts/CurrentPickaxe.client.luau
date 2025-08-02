@@ -73,15 +73,15 @@ local function billboardUIFunc(canEnhance, weapon, aftweapon, price, prob, ingre
 
 
         weaponLabel.Text = string.format("%s ▶ %s", weaponClean, aftweaponClean)
-		costLabel.Text = string.format("비용 : %s", comma(price))
-		probLabel.Text = string.format("성공 확률 : %d%%", prob)
+		costLabel.Text = string.format("Price : %s", comma(price))
+		probLabel.Text = string.format("Chance : %d%%", prob)
 		
 		ingredientLabel.Visible = false
 		if ingredient then
-			local format = "필요 재료 :%s"
+			local format = "%s"
 			
 			for itemname, amount in pairs(ingredient) do
-				format = string.format(format, string.format(" %s %d개", itemname, amount))
+				format = string.format(format, string.format(" %s %d", itemname, amount))
 				if next(ingredient, itemname) then
 					format = format..",%s"
 				end
