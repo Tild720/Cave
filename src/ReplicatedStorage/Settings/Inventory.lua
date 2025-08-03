@@ -283,7 +283,7 @@ function module:addTool(tool: Tool, parent: string, position: number)
 	if tool:HasTag("Ore") then
 		local weight = tool:GetAttribute("Weight")
 		if weight then
-			frame.toolName.text = tool.Name .. " [".. weight .. "KG]"
+			frame.toolName.Text = tool.Name .. " [".. weight .. "KG]"
 		end
 	end
 

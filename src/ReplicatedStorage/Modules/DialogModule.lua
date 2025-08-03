@@ -140,7 +140,7 @@ function DialogModule:triggerDialog(player, questionNumber)
 		local responseNum = nil
 		for i, response in ipairs(dialog.responses) do
 			local option = uiResponses[i] 
-			option.text.Text = "<font color='rgb(255,220,127)'>" .. i .. ".)</font> [''" .. response .. "'']"
+			option.text.Text = "[''" .. response .. "'']"
 			
 			-- calculate x size
 			local plaintext = i..".) [''"..response:gsub("%b<>", "").."'']"

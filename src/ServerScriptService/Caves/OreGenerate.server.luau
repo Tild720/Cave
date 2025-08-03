@@ -86,15 +86,15 @@ if not isUsed(pos, usedPositions) then
 		local function getRandomWeight()
 			local roll = rng:NextNumber(0, 100)
 			if roll <= 0.1 then
-				return rng:NextNumber(0, 100)
+				return rng:NextNumber(0.5, 100)
 			elseif roll <= 0.5 then
-				return rng:NextNumber(0, 65)
+				return rng:NextNumber(0.5, 65)
 			elseif roll <= 5 then
-				return rng:NextNumber(0, 20)
+				return rng:NextNumber(0.5, 20)
 			elseif roll <= 10 then
-				return rng:NextNumber(0, 10)
+				return rng:NextNumber(0.5, 10)
 			elseif roll <= 30 then
-				return rng:NextNumber(0, 5)
+				return rng:NextNumber(0.5, 5)
 			else
 				return rng:NextNumber(0.5, 1)
 			end
@@ -104,8 +104,6 @@ if not isUsed(pos, usedPositions) then
 		
 		clone:SetAttribute("Weight", weight)
 
-
-		print(clone.name.."의 Weight:", weight)
 
 		local scaleMultiplier = 1 + math.min(weight / 10, 9) -- 최대 10배까지
 		if clone:IsA("Model") and clone.PrimaryPart then

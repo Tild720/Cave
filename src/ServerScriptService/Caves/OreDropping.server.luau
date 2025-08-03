@@ -9,15 +9,13 @@ local timePassed = 0
 
 local function isAirAtPosition(pos)
 	local region = Region3.new(pos - Vector3.new(1, 1, 1), pos + Vector3.new(1, 1, 1)):ExpandToGrid(4)
-	print("검사 위치:", pos)
-	print("Region:", region)
+
 
 	local materials, occupancy = Terrain:ReadVoxels(region, 4)
 	local mat = materials[1][1][1]
 	local occ = occupancy[1][1][1]
 
-	print("재질:", mat)
-	print("채움도:", occ)
+
 
 	return mat == Enum.Material.Air and occ < 0.1
 end
