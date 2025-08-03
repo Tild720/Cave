@@ -72,13 +72,56 @@ local function spawnOres(regionName, regionData, regionParts)
 
 			local pos = roundVector3(Vector3.new(randX, randY, randZ) + partCenter)
 
-			if not isUsed(pos, usedPositions) then
-				local clone = Template:Clone()
-				clone.Position = pos
-				clone.Parent = OreFolder:FindFirstChild(regionName)
-				table.insert(usedPositions, pos)
-				break
+			local CollectionService = game:GetService("CollectionService")
+local rng = Random.new()
+
+if not isUsed(pos, usedPositions) then
+	local clone = Template:Clone()
+	clone.Position = pos
+	clone.Parent = OreFolder:FindFirstChild(regionName)
+	table.insert(usedPositions, pos)
+
+	if CollectionService:HasTag(clone, "Tool") then
+
+		local function getRandomWeight()
+			local roll = rng:NextNumber(0, 100)
+			if roll <= 0.1 then
+				return rng:NextNumber(0, 100)
+			elseif roll <= 0.5 then
+				return rng:NextNumber(0, 65)
+			elseif roll <= 5 then
+				return rng:NextNumber(0, 20)
+			elseif roll <= 10 then
+				return rng:NextNumber(0, 10)
+			elseif roll <= 30 then
+				return rng:NextNumber(0, 5)
+			else
+				return rng:NextNumber(0.5, 1)
 			end
+		end
+
+		local weight = math.round(getRandomWeight()  * 100) / 100
+		
+		clone:SetAttribute("Weight", weight)
+
+
+		print(clone.name.."의 Weight:", weight)
+
+		local scaleMultiplier = 1 + math.min(weight / 10, 9) -- 최대 10배까지
+		if clone:IsA("Model") and clone.PrimaryPart then
+			for _, part in ipairs(clone:GetDescendants()) do
+				if part:IsA("BasePart") then
+					part.Size *= scaleMultiplier
+				end
+			end
+		elseif clone:IsA("BasePart") then
+			clone.Size *= scaleMultiplier
+		end
+	end
+
+	break
+end
+
 		end
 	end
 end

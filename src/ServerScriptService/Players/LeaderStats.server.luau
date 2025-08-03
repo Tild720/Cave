@@ -22,7 +22,7 @@ local function giveWeapon(character)
 	local success, attempt = false, 1
 	
 	repeat
-		local weapon = game.ServerStorage.Weapons:FindFirstChild(datas[player.UserId].Weapon)
+		local weapon = game.ServerStorage.Weapons:FindFirstChild("Rusty Pickaxe")  --datas[player.UserId].Weapon)
 		print(weapon)
 		if weapon then
 			local humanoid = character:FindFirstChild("Humanoid")
@@ -111,7 +111,7 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 	end
 	
 	money.Value = datas[player.UserId].Money
-	currentWeapon.Value = datas[player.UserId].Weapon
+	currentWeapon.Value = "Rusty Pickaxe"   --datas[player.UserId].Weapon
 	giveWeapon(player.Character)
 	
 	money:GetPropertyChangedSignal("Value"):Connect(function()
