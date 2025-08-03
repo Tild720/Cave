@@ -110,7 +110,7 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 		player:Kick("데이터를 불러올 수 없습니다. 후에 다시 시도하세요.")
 	end
 	
-	money.Value = datas[player.UserId].Money
+	money.Value = 0--datas[player.UserId].Money
 	currentWeapon.Value = "Rusty Pickaxe"   --datas[player.UserId].Weapon
 	giveWeapon(player.Character)
 	
