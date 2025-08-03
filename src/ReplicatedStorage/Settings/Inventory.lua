@@ -279,6 +279,15 @@ function module:addTool(tool: Tool, parent: string, position: number)
 		frame.toolAmount.Text = "x" .. amount
 	end
 	frame.toolName.Text = tool.Name
+
+	if tool:HasTag("Ore") then
+		local weight = tool:GetAttribute("Weight")
+		if weight then
+			frame.toolName.text = tool.Name .. " [".. weight .. "KG]"
+		end
+	end
+
+
 	frame.Parent = parent == "Inventory" and inventoryFrame.Frame or hotbar
 	frame.Name = parent == "Inventory" and tool.Name or position
 	frame.toolNumber.Text = parent == "Inventory" and "" or position
