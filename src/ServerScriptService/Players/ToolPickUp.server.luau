@@ -1,6 +1,7 @@
 local CollectionService = game:GetService("CollectionService")
 local ServerStorage = game:GetService("ServerStorage")
 local ToolsFolder = ServerStorage:WaitForChild("Tools")
+local PlayerEvent = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PlayerEvent")
 
 -- 파트 처리 함수
 local function setupToolPart(part)
@@ -12,7 +13,7 @@ local function setupToolPart(part)
 		return
 	end
 
-	if prompt:GetAttribute("Connected") then return end -- 중복 연결 방지
+	if prompt:GetAttribute("Connected") then return end
 	prompt:SetAttribute("Connected", true)
 
 	prompt.Triggered:Connect(function(player)
@@ -51,8 +52,9 @@ local function setupToolPart(part)
 
 		clone:SetAttribute("Weight", oreWeight)
 		clone.Parent = player:WaitForChild("Backpack")
-
-		-- 시각적 효과 및 파괴
+		PlayerEvent:FireClient(player, "PlaySound", "ToolPickUp")
+		PlayerEvent:FireClient(player, "Alert", "You picked up a " .. toolName .. " [" .. oreWeight .. "KG]")
+	
 		prompt.Enabled = false
 		part.Transparency = 1
 
@@ -64,12 +66,12 @@ local function setupToolPart(part)
 	end)
 end
 
--- 기존 파트 처리
+
 for _, part in pairs(CollectionService:GetTagged("Tool")) do
 	setupToolPart(part)
 end
 
--- 새 파트 추가 시 처리
+
 CollectionService:GetInstanceAddedSignal("Tool"):Connect(function(part)
 	setupToolPart(part)
 end)
