@@ -13,8 +13,8 @@ PlayerEvent.OnClientEvent:Connect(function(action, arg)
            for i = 1, 3 do
 
             TweenService:Create(Camera, TweenInfo.new(2), {CFrame = Blocks.CameraParts.Base:FindFirstChild(i).CFrame}):Play()
-                wait(2)
-
+                wait(1.3)
+            
         
            end
            Camera.CameraType = Enum.CameraType.Custom

@@ -63,6 +63,9 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 	local money = Instance.new("IntValue", leaderstats)
 	money.Name = "Money"
 	
+	local Base = Instance.new("BoolValue", player)
+	Base.Name = "Base"
+	
 	local currentWeapon = Instance.new("StringValue", player)
 	currentWeapon.Name = "CurrentWeapon"
 	
@@ -112,6 +115,7 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 	
 	money.Value = 0--datas[player.UserId].Money
 	currentWeapon.Value = "Rusty Pickaxe"   --datas[player.UserId].Weapon
+	Base.Value = datas[player.UserId].Base
 	giveWeapon(player.Character)
 	
 	money:GetPropertyChangedSignal("Value"):Connect(function()
@@ -119,6 +123,9 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 	end)
 	currentWeapon:GetPropertyChangedSignal("Value"):Connect(function()
 		datas[player.UserId].Weapon = currentWeapon.Value
+	end)
+	Base:GetPropertyChangedSignal("Value"):Connect(function()
+		datas[player.UserId].Base = Base.Value
 	end)
 	leaderstats.Parent = player
 	

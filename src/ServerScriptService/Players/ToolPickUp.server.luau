@@ -2,7 +2,7 @@ local CollectionService = game:GetService("CollectionService")
 local ServerStorage = game:GetService("ServerStorage")
 local ToolsFolder = ServerStorage:WaitForChild("Tools")
 local PlayerEvent = game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PlayerEvent")
-
+task.wait(1) 
 -- 파트 처리 함수
 local function setupToolPart(part)
 	if not part:IsA("BasePart") then return end
