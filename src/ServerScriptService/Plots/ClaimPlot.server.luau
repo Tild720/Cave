@@ -15,10 +15,12 @@ local function assignPlotToPlayer(player)
 
 			
 			PlotAssigned:FireClient(player, ownerValue)
-			ownerValue.Value = player.UserId
+		
 			break
 		end
 	end
 end
-
+PlotAssigned.OnServerEvent:Connect(function(player,ownerValue)
+		PlotAssigned:FireClient(player, ownerValue)
+	end)
 Players.PlayerAdded:Connect(assignPlotToPlayer)

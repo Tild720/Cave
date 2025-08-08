@@ -27,6 +27,7 @@ Players.PlayerAdded:Connect(function(plr)
 end)
 
 PlotClaim.OnServerEvent:Connect(function(plr, owner)
+	print("Plot claimed by: " .. plr.Name, "Owner: " .. owner.Name)
 	owner.Value = plr.UserId
 	plr:FindFirstChild("Plot").Value = true
 end)
