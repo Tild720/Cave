@@ -11,7 +11,13 @@ local ultraSuccess = enhanceEffects:WaitForChild("UltraSuccess")
 local fail = enhanceEffects:WaitForChild("Fail")
 local parry = parryEffects:WaitForChild("Parry")
 local stun = parryEffects:WaitForChild("Stun")
+
 local LocalPlayer = game.Players.LocalPlayer
+local FadeGUI = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MainGui"):WaitForChild("Fade")
+local TweenService = game:GetService("TweenService")
+local TweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+
 local function emitParticles(attachment : Attachment, defaultEmitCount : int)
 	for _, particle in ipairs(attachment:GetChildren()) do
 		if particle:IsA("ParticleEmitter") then
@@ -53,11 +59,19 @@ playSoundRemote.OnClientEvent:Connect(function(soundid, volume, timelength)
 	befSound = sound
 end)
 
-PlayerEvent.OnClientEvent:Connect(function(eventName, bool)
+PlayerEvent.OnClientEvent:Connect(function(eventName, bool, message)
 	if eventName == "CamShake" then
 		
 		LocalPlayer.Character:WaitForChild("CamShake").Value = bool
     end
+	if eventName == "Fade" then
+		TweenService:Create(FadeGUI, TweenInfo, {GroupTransparency = bool and 0 or 1}):Play()
+		if message then
+			FadeGUI:WaitForChild("InfoText").Text = message
+		else
+			FadeGUI:WaitForChild("InfoText").Text = ""
+		end
+	end
 end)
 
 effectShowRemote.OnClientEvent:Connect(function(key, pos)
@@ -108,3 +122,4 @@ effectShowRemote.OnClientEvent:Connect(function(key, pos)
 		debris:AddItem(newStun, 2)
 	end
 end)
+

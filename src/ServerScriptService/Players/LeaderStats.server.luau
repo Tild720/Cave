@@ -65,6 +65,10 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 	
 	local Base = Instance.new("BoolValue", player)
 	Base.Name = "Base"
+
+
+	local BaseObjects = Instance.new("Folder", player)
+	BaseObjects.Name = "Base"
 	
 	local currentWeapon = Instance.new("StringValue", player)
 	currentWeapon.Name = "CurrentWeapon"

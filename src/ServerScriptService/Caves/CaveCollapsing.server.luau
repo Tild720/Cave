@@ -5,6 +5,7 @@ local Workspace = game:GetService("Workspace")
 
 local Collapsing = workspace:WaitForChild("Collapsing")
 local CaveRopes = Collapsing:WaitForChild("CaveRopes")
+local Sparks = Collapsing:WaitForChild("Sparks")
 local Fog = Collapsing:WaitForChild("Fog")
 local Door = Collapsing:WaitForChild("Door")
 local DoorBase = Door:WaitForChild("Base")
@@ -27,6 +28,18 @@ local function shakeRopes(strength)
 		end
 	end
 end
+local function RandomSpark(count)
+    for _, spark in ipairs(Sparks:GetChildren()) do
+        
+        if math.random(1, 10) < count then
+            spark:FindFirstChild("Sparks").Enabled = true
+            task.delay(0.5, function()
+                spark:FindFirstChild("Sparks").Enabled = false
+            end)
+        end
+        
+    end
+end
 
 local function turnLights(bool)
 	for _, rope in ipairs(CaveRopes:GetChildren()) do
@@ -38,6 +51,7 @@ local function turnLights(bool)
 				if bool then
 					lightPart.Material = Enum.Material.Neon
 					print("Light ON:", rope.Name, lightPart.Name)
+                    
 				else
 					lightPart.Material = Enum.Material.Plastic
 					print("Light OFF:", rope.Name, lightPart.Name)
@@ -49,38 +63,50 @@ local function turnLights(bool)
 	end
 end
 
+local function isPointInPart(point, part)
+    local size = part.Size
+    local pos = part.Position
+    local min = pos - (size / 2)
+    local max = pos + (size / 2)
+
+    return (point.X >= min.X and point.X <= max.X) and
+           (point.Y >= min.Y and point.Y <= max.Y) and
+           (point.Z >= min.Z and point.Z <= max.Z)
+end
 local function camShakePlayers(strong, duration)
-	for _, part in ipairs(Fog:GetTouchingParts()) do
-		local char = part.Parent
-		local player = Players:GetPlayerFromCharacter(char)
-		if player and char:FindFirstChild("CamShake") then
-			print("CamShake ON for", player.Name)
-			char.CamShake.Value = true
-			task.delay(duration or 0.5, function()
-				if char and char:FindFirstChild("CamShake") then
-					char.CamShake.Value = false
-					print("CamShake OFF for", player.Name)
-				end
-			end)
-		end
-	end
+    for _, player in pairs(Players:GetPlayers()) do
+        local char = player.Character
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+        local camShakeValue = char and char:FindFirstChild("CamShake")
+        if hrp and camShakeValue and isPointInPart(hrp.Position, Fog) then
+            camShakeValue.Value = true
+            task.delay(duration or 0.5, function()
+                if camShakeValue and camShakeValue.Parent then
+                    camShakeValue.Value = false
+                end
+            end)
+        end
+    end
 end
 
 local function killPlayersInFog()
-	print("Killing players inside Fog...")
-	for _, part in ipairs(Fog:GetTouchingParts()) do
-		local char = part.Parent
-		local hum = char:FindFirstChildOfClass("Humanoid")
-		local player = Players:GetPlayerFromCharacter(char)
-		if hum then
-			if player then
-				print("Killing player:", player.Name)
-			else
-				print("Killing NPC:", char.Name)
-			end
-			hum.Health = 0
-		end
-	end
+
+for _, player in pairs(Players:GetPlayers()) do
+    local char = player.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    if hrp and hum then
+        if isPointInPart(hrp.Position, Fog) then
+            print("Killing player inside Fog:", player.Name)
+            hum.Health = 0
+            PlayerEvent:FireClient(player,"Fade",true, "Crushed to death by a stone.")
+            wait(3)
+            PlayerEvent:FireClient(player,"Fade",false, "")
+        end
+    end
+end
+
+
 end
 
 local function fillBasaltFromBlocks()
@@ -98,11 +124,12 @@ end
 
 
 local function collapseEvent()
+    wait(3)
 	print("Collapse Event Started")
 	PlayerEvent:FireAllClients("Alert", "After 60 seconds, the cave collapses.")
-	task.wait(10)
+	task.wait(5)
 	PlayerEvent:FireAllClients("Alert", "Evacuate to the lobby.")
-	task.wait(30)
+	task.wait(3)
 
 	local caveShakingSound = Collapsing:FindFirstChild("CaveShaking")
 	if caveShakingSound then 
@@ -114,42 +141,52 @@ local function collapseEvent()
 		local startTime = tick()
 		while tick() - startTime < 30 do
 			shakeRopes(2)
-			camShakePlayers(false, 0.5)
-			task.wait(5)
+            RandomSpark(7)
+			camShakePlayers(false, 0.1)
+			task.wait(1)
+            
 		end
 	end)
 
 	task.wait(10)
-	local CaveShaking2 = Collapsing:FindFirstChild("CaveShaking2")
-	if CaveShaking2 then CaveShaking2:Play() end
+	
 
 	PlayerEvent:FireAllClients("Alert", "Closing Safety Door")
 	print("Closing Door Tween Start")
 	doorTweenClose:Play()
+     local CaveShaking2 = Collapsing:FindFirstChild("CaveShaking2")
+	if CaveShaking2 then CaveShaking2:Play() end
 
 	task.spawn(function()
 		local startTime = tick()
 		while tick() - startTime < 5 do
 			shakeRopes(13)
 			camShakePlayers(true, 0.5)
+            RandomSpark(9)
 			task.wait(0.3)
 		end
 		print("Turning off all lights")
 		local caveShakingSound3 = Collapsing:FindFirstChild("CaveShaking3")
 		if caveShakingSound3 then caveShakingSound3:Play() end
-		turnLights(false)
+		
 	end)
-
-	task.wait(5)
-	killPlayersInFog()
-	if caveShakingSound then caveShakingSound:Stop() end 
      Fog.ParticleEmitter.Enabled = false
+     	task.wait(3)
+    
+      local CaveShaking4= Collapsing:FindFirstChild("CaveShaking4")
+	if CaveShaking4 then CaveShaking4:Play() end
+    turnLights(false)
+	killPlayersInFog()
 
-	task.wait(2)
+	if caveShakingSound then caveShakingSound:Stop() end 
+    
+
+	task.wait(3)
+    SpawnOre:Fire()
 	fillBasaltFromBlocks()
 	print("Filled Basalt from FillBlockws")
-    turnLights(true)    
-	SpawnOre:Fire()
+    turnLights(true) 
+	
 	print("SpawnOre function invoked")
     
 	task.wait(3)
@@ -159,8 +196,7 @@ local function collapseEvent()
 end
 
 while true do
-    wait(5)
-       SpawnOre:Fire()
-	--collapseEvent()
+
+	collapseEvent()
 	task.wait(600)
 end
