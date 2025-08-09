@@ -1,3 +1,9 @@
+
+local UserInputService = game:GetService("UserInputService")
+if UserInputService.TouchEnabled then
+    return 
+end
+
 --[[
 	[Head/Waist Follow Mouse/Camera Script.]
 	[Works with both R6 and R15, lets you turn your character's head and waist towards your mouse/camera.]

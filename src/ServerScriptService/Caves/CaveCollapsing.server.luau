@@ -109,7 +109,7 @@ local function collapseEvent()
 		caveShakingSound:Play() 
 		print("CaveShaking sound played")
 	end
-
+    Fog.ParticleEmitter.Enabled = true
 	task.spawn(function()
 		local startTime = tick()
 		while tick() - startTime < 30 do
@@ -143,22 +143,24 @@ local function collapseEvent()
 	task.wait(5)
 	killPlayersInFog()
 	if caveShakingSound then caveShakingSound:Stop() end 
-
+     Fog.ParticleEmitter.Enabled = false
 
 	task.wait(2)
 	fillBasaltFromBlocks()
-	print("Filled Basalt from FillBlocks")
-	SpawnOre:Invoke()
+	print("Filled Basalt from FillBlockws")
+    turnLights(true)    
+	SpawnOre:Fire()
 	print("SpawnOre function invoked")
-
+    
 	task.wait(3)
 	print("Opening Door Tween Start")
 	doorTweenOpen:Play()
-    turnLights(true)    
+ 
 end
 
 while true do
-	wait(1)
-	collapseEvent()
+    wait(5)
+       SpawnOre:Fire()
+	--collapseEvent()
 	task.wait(600)
 end
