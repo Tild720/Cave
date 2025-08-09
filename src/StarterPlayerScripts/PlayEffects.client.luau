@@ -1,6 +1,7 @@
 local debris = game:GetService("Debris")
 local playSoundRemote = game.ReplicatedStorage.Events:WaitForChild("PlaySound")
 local effectShowRemote = game.ReplicatedStorage.Events:WaitForChild("EffectShow")
+local PlayerEvent = game.ReplicatedStorage.Events:WaitForChild("PlayerEvent")
 local effects = game.ReplicatedStorage:WaitForChild("Objects"):WaitForChild("Effects")
 local enhanceEffects = effects:WaitForChild("EnhanceEffects")
 local parryEffects = effects:WaitForChild("ParryEffects")
@@ -10,7 +11,7 @@ local ultraSuccess = enhanceEffects:WaitForChild("UltraSuccess")
 local fail = enhanceEffects:WaitForChild("Fail")
 local parry = parryEffects:WaitForChild("Parry")
 local stun = parryEffects:WaitForChild("Stun")
-
+local LocalPlayer = game.Players.LocalPlayer
 local function emitParticles(attachment : Attachment, defaultEmitCount : int)
 	for _, particle in ipairs(attachment:GetChildren()) do
 		if particle:IsA("ParticleEmitter") then
@@ -50,6 +51,13 @@ playSoundRemote.OnClientEvent:Connect(function(soundid, volume, timelength)
 	sound.Volume = volume
 	sound:Play()
 	befSound = sound
+end)
+
+PlayerEvent.OnClientEvent:Connect(function(eventName, bool)
+	if eventName == "CamShake" then
+		
+		LocalPlayer.Character:WaitForChild("CamShake").Value = bool
+    end
 end)
 
 effectShowRemote.OnClientEvent:Connect(function(key, pos)

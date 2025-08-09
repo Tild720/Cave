@@ -3,6 +3,9 @@ local OrePrefabs = game.ServerStorage:WaitForChild("Ores")
 local CaveSetting = require(game.ReplicatedStorage:WaitForChild("Settings"):WaitForChild("Cave"))
 local OrePoses = game.Workspace:WaitForChild("OrePoses")
 
+local CollectionService = game:GetService("CollectionService")
+local rng = Random.new()
+
 local function roundVector3(v)
 	return Vector3.new(math.floor(v.X), math.floor(v.Y), math.floor(v.Z))
 end
@@ -41,8 +44,6 @@ local function spawnOres(regionName, regionData, regionParts)
 		usedPositionsPerPart[i] = {}
 	end
 
-	local spawnPerPart = math.floor(regionData.SpawnCount / #regionParts)
-
 	for i = 1, regionData.SpawnCount do
 		local partIndex = ((i - 1) % #regionParts) + 1
 		local part = regionParts[partIndex]
@@ -52,7 +53,6 @@ local function spawnOres(regionName, regionData, regionParts)
 		local partCenter = part.Position
 
 		local selectedOre = weightedRandom(regionData.Ores)
-
 		if not selectedOre then continue end
 
 		oreCounts[selectedOre] = (oreCounts[selectedOre] or 0) + 1
@@ -72,62 +72,73 @@ local function spawnOres(regionName, regionData, regionParts)
 
 			local pos = roundVector3(Vector3.new(randX, randY, randZ) + partCenter)
 
-			local CollectionService = game:GetService("CollectionService")
-local rng = Random.new()
+			if not isUsed(pos, usedPositions) then
+				local clone = Template:Clone()
+				clone.Position = pos
 
-if not isUsed(pos, usedPositions) then
-	local clone = Template:Clone()
-	clone.Position = pos
-	clone.Parent = OreFolder:FindFirstChild(regionName)
-	table.insert(usedPositions, pos)
-
-	if CollectionService:HasTag(clone, "Tool") then
-
-		local function getRandomWeight()
-			local roll = rng:NextNumber(0, 100)
-			if roll <= 0.1 then
-				return rng:NextNumber(0.5, 100)
-			elseif roll <= 0.5 then
-				return rng:NextNumber(0.5, 65)
-			elseif roll <= 5 then
-				return rng:NextNumber(0.5, 20)
-			elseif roll <= 10 then
-				return rng:NextNumber(0.5, 10)
-			elseif roll <= 30 then
-				return rng:NextNumber(0.5, 5)
-			else
-				return rng:NextNumber(0.5, 1)
-			end
-		end
-
-		local weight = math.round(getRandomWeight()  * 100) / 100
-		
-		clone:SetAttribute("Weight", weight)
-
-
-		local scaleMultiplier = 1 + math.min(weight / 10, 9) -- 최대 10배까지
-		if clone:IsA("Model") and clone.PrimaryPart then
-			for _, part in ipairs(clone:GetDescendants()) do
-				if part:IsA("BasePart") then
-					part.Size *= scaleMultiplier
+				local regionFolder = OreFolder:FindFirstChild(regionName)
+				if not regionFolder then
+					regionFolder = Instance.new("Folder")
+					regionFolder.Name = regionName
+					regionFolder.Parent = OreFolder
 				end
+				clone.Parent = regionFolder
+				table.insert(usedPositions, pos)
+
+				if CollectionService:HasTag(clone, "Tool") then
+					local function getRandomWeight()
+						local roll = rng:NextNumber(0, 100)
+						if roll <= 0.1 then
+							return rng:NextNumber(0.5, 100)
+						elseif roll <= 0.5 then
+							return rng:NextNumber(0.5, 65)
+						elseif roll <= 5 then
+							return rng:NextNumber(0.5, 20)
+						elseif roll <= 10 then
+							return rng:NextNumber(0.5, 10)
+						elseif roll <= 30 then
+							return rng:NextNumber(0.5, 5)
+						else
+							return rng:NextNumber(0.5, 1)
+						end
+					end
+
+					local weight = math.round(getRandomWeight() * 100) / 100
+					clone:SetAttribute("Weight", weight)
+
+					local scaleMultiplier = 1 + math.min(weight / 10, 9)
+					if clone:IsA("Model") and clone.PrimaryPart then
+						for _, part in ipairs(clone:GetDescendants()) do
+							if part:IsA("BasePart") then
+								part.Size *= scaleMultiplier
+							end
+						end
+					elseif clone:IsA("BasePart") then
+						clone.Size *= scaleMultiplier
+					end
+				end
+
+				break
 			end
-		elseif clone:IsA("BasePart") then
-			clone.Size *= scaleMultiplier
-		end
-	end
-
-	break
-end
-
 		end
 	end
 end
 
-for regionName, regionData in pairs(CaveSetting.DepthRegions) do
-	local regionFolder = OrePoses:FindFirstChild(regionName)
-	if regionFolder then
-		local parts = regionFolder:GetChildren()
-		spawnOres(regionName, regionData, parts)
+local function clearAllOres()
+	for _, regionFolder in ipairs(OreFolder:GetChildren()) do
+		regionFolder:ClearAllChildren()
 	end
 end
+
+local function SpawnOre()
+	clearAllOres()
+	for regionName, regionData in pairs(CaveSetting.DepthRegions) do
+		local regionFolder = OrePoses:FindFirstChild(regionName)
+		if regionFolder then
+			local parts = regionFolder:GetChildren()
+			spawnOres(regionName, regionData, parts)
+		end
+	end
+end
+
+return SpawnOre
