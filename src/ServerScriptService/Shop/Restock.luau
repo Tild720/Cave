@@ -4,12 +4,12 @@ local MemoryStoreService = game:GetService("MemoryStoreService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 
-local ToolData = require(ReplicatedStorage:WaitForChild("Settings").ToolData) :: ModuleScript
+local ToolData = require(ReplicatedStorage:WaitForChild("Setting").ToolData) :: ModuleScript
 local RemoteEvents = ReplicatedStorage:WaitForChild("Events")
 
 local stockMemoryKey = "GLOBAL_SHOP_STOCK"
 local timeMemoryKey = "GLOBAL_RESTOCK_TIME"
-local restockInterval = 300
+local restockInterval = 1
 
 local Service = {
 	RestockInterval = restockInterval,
@@ -121,6 +121,7 @@ end
 function Service.init()
 	MessagingService:SubscribeAsync("GlobalShopRestock", OnRestockMessage)
 
+    
 	task.spawn(function()
 		while true do
 			local remaining = Service:GetTimeUntilRestock()
@@ -146,6 +147,12 @@ function Service.init()
 		end)
 	end)
 
+      task.delay(3, function()
+    print("테스트용 강제 리스톡 발생")
+    local stock = GenerateStock()
+    RemoteEvents.ResetGearShop:FireAllClients(stock.Tools)
+    end)
+
 	RemoteEvents.BuyGear.OnServerEvent:Connect(function(player, gearName)
 		local stock = Service:GetCurrentStock()
 		if not stock then return end
@@ -155,6 +162,8 @@ function Service.init()
 		Service:SaveStockToMemoryStore(stock)
 		RemoteEvents.ResetGearShop:FireAllClients(stock.Tools)
 	end)
+
+  
 end
 
 return Service
