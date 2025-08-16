@@ -6,7 +6,7 @@ local PlayerEvent = game.ReplicatedStorage.Events:WaitForChild("PlayerEvent")
 
 local PlotPart = nil
 BaseTrigger.Triggered:Connect(function(player)
-    print("Base Triggered by: " .. player.Name)
+  
     PlayerEvent:FireClient(player, "CutScene", "Base")
 
     local PlotPart = nil
@@ -14,7 +14,7 @@ BaseTrigger.Triggered:Connect(function(player)
         local plot = Plots[i]
         local ownerValue = plot:FindFirstChild("Owner")
       if ownerValue and tonumber(ownerValue.Value) == player.UserId then
-        print("Plot found for player:", player.Name, "Plot:", plot.Name)
+      
         PlotPart = plot
         break
         end     

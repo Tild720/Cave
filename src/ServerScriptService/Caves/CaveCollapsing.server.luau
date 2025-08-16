@@ -50,14 +50,14 @@ local function turnLights(bool)
 				spotLight.Enabled = bool
 				if bool then
 					lightPart.Material = Enum.Material.Neon
-					print("Light ON:", rope.Name, lightPart.Name)
+				
                     
 				else
 					lightPart.Material = Enum.Material.Plastic
-					print("Light OFF:", rope.Name, lightPart.Name)
+				
 				end
-			else
-				print("SpotLight missing in", lightPart and lightPart.Name or "nil")
+		
+				
 			end
 		end
 	end
@@ -97,7 +97,7 @@ for _, player in pairs(Players:GetPlayers()) do
     local hum = char and char:FindFirstChildOfClass("Humanoid")
     if hrp and hum then
         if isPointInPart(hrp.Position, Fog) then
-            print("Killing player inside Fog:", player.Name)
+          
             hum.Health = 0
             PlayerEvent:FireClient(player,"Fade",true, "Crushed to death by a stone.")
             wait(3)
@@ -125,16 +125,16 @@ end
 
 local function collapseEvent()
     wait(3)
-	print("Collapse Event Started")
+	
 	PlayerEvent:FireAllClients("Alert", "After 60 seconds, the cave collapses.")
-	task.wait(5)
+	task.wait(10)
 	PlayerEvent:FireAllClients("Alert", "Evacuate to the lobby.")
-	task.wait(3)
+	task.wait(5)    
 
 	local caveShakingSound = Collapsing:FindFirstChild("CaveShaking")
 	if caveShakingSound then 
 		caveShakingSound:Play() 
-		print("CaveShaking sound played")
+
 	end
     Fog.ParticleEmitter.Enabled = true
 	task.spawn(function()
@@ -152,7 +152,7 @@ local function collapseEvent()
 	
 
 	PlayerEvent:FireAllClients("Alert", "Closing Safety Door")
-	print("Closing Door Tween Start")
+	
 	doorTweenClose:Play()
      local CaveShaking2 = Collapsing:FindFirstChild("CaveShaking2")
 	if CaveShaking2 then CaveShaking2:Play() end
@@ -165,7 +165,7 @@ local function collapseEvent()
             RandomSpark(9)
 			task.wait(0.3)
 		end
-		print("Turning off all lights")
+	
 		local caveShakingSound3 = Collapsing:FindFirstChild("CaveShaking3")
 		if caveShakingSound3 then caveShakingSound3:Play() end
 		
@@ -184,13 +184,13 @@ local function collapseEvent()
 	task.wait(3)
     SpawnOre:Fire()
 	fillBasaltFromBlocks()
-	print("Filled Basalt from FillBlockws")
+	
     turnLights(true) 
 	
-	print("SpawnOre function invoked")
+
     
 	task.wait(3)
-	print("Opening Door Tween Start")
+
 	doorTweenOpen:Play()
  
 end

@@ -23,7 +23,7 @@ local function giveWeapon(character)
 	
 	repeat
 		local weapon = game.ServerStorage.Weapons:FindFirstChild("Rusty Pickaxe")  --datas[player.UserId].Weapon)
-		print(weapon)
+		
 		if weapon then
 			local humanoid = character:FindFirstChild("Humanoid")
 			if humanoid then
@@ -88,7 +88,7 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 	local defaultClone = table.clone(defaultData)
 	
 	if success then
-		print(player, "데이터스토어 연결 성공")
+		
 		if not playerData then
 			-- 신규 유저에게는 기본값 제공
 			playerData = defaultClone
@@ -111,9 +111,8 @@ game.Players.PlayerAdded:Connect(function(player) -- 플레이어 들어올 경�
 		datas[player.UserId] = playerData
 		print(datas[player.UserId])
 	
-		print("register")
+	
 	else
-		print(player, "님의 데이터를 불러올 수 없습니다.")
 		player:Kick("데이터를 불러올 수 없습니다. 후에 다시 시도하세요.")
 	end
 	
@@ -169,8 +168,7 @@ end
 game.Players.PlayerRemoving:Connect(saveData)
 game:BindToClose(function() -- 서버가 셧다운 될 때
 	if runService:IsStudio() then return end
-	
-	print("서버가 셧다운 되는 중입니다.")
+	print("서버 셧다운 중, 모든 플레이어 데이터 저장 중...")
 	for _, player in ipairs(game.Players:GetPlayers()) do
 		task.spawn(function()
 		--	saveData(player)

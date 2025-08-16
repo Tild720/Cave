@@ -366,7 +366,7 @@ function module:addTool(tool: Tool, parent: string, position: number)
 			
 		else
 			if (not tool.Parent)  then
-				print("having")
+			
 			end
 			frame.Image = SETTINGS.DISABLED_IMAGEID
 			frame.BackgroundColor3 = SETTINGS.DISABLED_COLOR
